@@ -14,6 +14,16 @@ class Node {
       this.head = null;
       this.tail = null;
     }
+
+    isEmpty() {
+      if(!this.head) {
+        return true
+      }
+      let newNode = new Node();
+      this.head = newNode;
+      this.tail = newNode;
+      return false
+    }
   
     toArray() {
       const vals = [];
@@ -110,7 +120,16 @@ class Node {
     }
   
     append(target, newData){
-      // PSUEDO CODE HERE!!
+      // let newNode carry the newData which is to be added after the target node
+      // runner will start at the head and loop through the DLL
+      // as long as there's a runner, if runner is equal to target then
+      // runner's next node is equal to newNode.next
+      // then make the runner.next.prev node eqauls to newNode
+      // then make the runner.next node equal to the newNode
+      // and newNode.prev's node equals to the runner
+      // if not then make runner equal to the next node to move the runner
+        // Edge Case: if the runner.data equals to the target and also equals to the tail
+        // add the newNode after the tail using the insertAtBack method
       var newNode = new Node(newData);
       let runner = this.head;
       while(runner){
@@ -120,8 +139,8 @@ class Node {
           }
           newNode.next = runner.next;
           runner.next.prev = newNode;
-          newNode.prev = runner;
           runner.next = newNode;
+          newNode.prev = runner;
         }
         runner = runner.next;
       }
