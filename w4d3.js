@@ -78,45 +78,53 @@ class Node {
       }
       return this
     }
-  
+  // Edge case: 2->2->2->2
+        // start at the head and loop through DLL
+        // if data is equal to the head and the head.next then make the next node the head
+        // and make the head.prev equal to null
+        // if the runner equal to the tail, that is the end of the list, 
+        // make the runner equal to null to remove the tail
+        // start at head and loop through DLL and find node that equals data
+        // when node = data, data.prev.next node equals to data.next node
+        // also, change data.next.prev equals to data.prev
     remove(data){
-      // if the data equals to the head, then make the next node the head
-      while(this.head == data){
-        this.head = this.head.next;
-      }
-      // if the data equals to the tail, then make the prev node the tail
-      while(this.tail == data) {
-        this.tail = this.tail.prev;
-      }
-      // Edge case: 2->2->2->2
-      // start at the head and loop through DLL
-      // if data is equal to the head and the head.next then make the next node the head
-      // and make the head.prev equal to null
-      // if the runner equal to the tail, that is the end of the list, 
-      // make the runner equal to null to remove the tail
-      let runner = this.head;
-      while(runner) {
-        if (runner.data && runner.next == data) {
-          this.head = runner.next
-          //runner.next.prev = null
-          if(runner == this.tail){
-            runner = null
+      if(!this.head || !data) {
+        console.log(`---Could not delete ${data} from DLL---`)
+      } else {
+          // if the data equals to the head, then make the next node the head
+        while(this.head.data == data) {
+          this.head = this.head.next;
+          // this.head.prev = null;
+          // when the new node becomes the head and it doesn't equal to data
+          if(this.head == null) {
+            this.tail = null
+            return
           }
-        runner = runner.next;
+
+          // solves for edge case such as 2->3->3->3
+          if (this.tail = null) {
+            this.head.prev = null;
+            return
+          }
         }
-        return
-      }
-      // start at head and loop through DLL and find node that equals data
-      // when node = data, data.prev.next node equals to data.next node
-      // also, change data.next.prev equals to data.prev
-      while(runner) {
-        if(runner.data == data) {
-          runner.prev.next = runner.next
-          runner.next.prev = runner.prev
+        // if the data equals to the tail, then make the prev node the tail
+        while(this.tail == data) {
+          this.tail = this.tail.prev;
+          this.tail.next = null;
+          return
         }
-        runner = runner.next
+        let runner = this.head;
+        while(runner) {
+          if(runner.data == data) {
+            runner.prev.next = runner.next
+            runner.next.prev = runner.prev;
+            // this works for 1->2->2->2
+            // runner.next = runner.prev
+          }
+          runner = runner.next
+        }
+        return;
       }
-      return
     }
   
     append(target, newData){
@@ -150,17 +158,18 @@ class Node {
   
   let emptyList = new DoublyLinkedList();
   
-  console.log(emptyList.toArray());
+  //console.log(emptyList.toArray());
   
-   let list1 = new DoublyLinkedList();
+  let list1 = new DoublyLinkedList();
+  //list1.insertAtFront(3);
   list1.insertAtFront(2);
   list1.insertAtFront(2);
   list1.insertAtFront(2);
-  list1.insertAtFront(2);
-  list1.insertAtFront(2);
+  list1.insertAtFront(1);
   //list1.insertAtBack(5);
   console.log(list1.toArray());
   list1.remove(2);
+  // console.log(list1.isEmpty());
   //list1.append(1,6);
   console.log(list1.toArray());
   
