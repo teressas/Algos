@@ -78,16 +78,9 @@ class Node {
       }
       return this
     }
-  // Edge case: 2->2->2->2
-        // start at the head and loop through DLL
-        // if data is equal to the head and the head.next then make the next node the head
-        // and make the head.prev equal to null
-        // if the runner equal to the tail, that is the end of the list, 
-        // make the runner equal to null to remove the tail
-        // start at head and loop through DLL and find node that equals data
-        // when node = data, data.prev.next node equals to data.next node
-        // also, change data.next.prev equals to data.prev
+  
     remove(data){
+      
       if(!this.head || !data) {
         console.log(`---Could not delete ${data} from DLL---`)
       } else {
@@ -113,13 +106,25 @@ class Node {
           this.tail.next = null;
           return
         }
+        // runner starts at head
+        // goes through each node in the DLL to find if the runner node equals to data
+        // if the runner is equal to data, then make runner's next node equal to the runner's prev next node
+          // this redirect the runner's next arrow and connects the runner's prev node to the runner's next node
+          // 1->2->2 becomes 1->2
+        // also make the runner's prev node equal to the runner's next node
+          // this moves the runner's previous arrow and connects the runner's next node to the runner's prev node
+          // 1<-2<-2 becomes 1<-2
+        // when it's done move the runner to the runner's next node and check if runner equals to data
+        // if not return the list
         let runner = this.head;
         while(runner) {
           if(runner.data == data) {
+            // must redirect the runner's next arrow and connect the runner's prev node to the runner's next node first
+            // after moving the runner's next arrow, runner.next.prev becomes null
             runner.prev.next = runner.next
-            runner.next.prev = runner.prev;
-            // this works for 1->2->2->2
-            // runner.next = runner.prev
+            // previous: runner.next.prev = runner.prev;
+            // then redirect the runner's prev arrow and connect the runner's next node to the runner's prev node
+            runner.next = runner.prev
           }
           runner = runner.next
         }
@@ -162,10 +167,10 @@ class Node {
   
   let list1 = new DoublyLinkedList();
   //list1.insertAtFront(3);
-  list1.insertAtFront(2);
-  list1.insertAtFront(2);
-  list1.insertAtFront(2);
   list1.insertAtFront(1);
+  list1.insertAtFront(2);
+  list1.insertAtFront(2);
+  list1.insertAtFront(2);
   //list1.insertAtBack(5);
   console.log(list1.toArray());
   list1.remove(2);
