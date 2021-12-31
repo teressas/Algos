@@ -48,9 +48,13 @@ class SLL {
         let count = 1;
         // loop through list until runner equals to null
         while(runner.next) {
-            runner = runner.next;
-            total += runner.val;
-            count ++
+            if (typeof(runner.data) !== "number") {
+                return "invalid number";
+            } else {
+                runner = runner.next;
+                total += runner.val;
+                count ++
+            }
         }
         console.log("Total:", total);
         console.log("Count:", count);
@@ -108,7 +112,7 @@ class SLL {
 
 var a = new Node(1)
 var b = new Node(2)
-var c = new Node(3)
+var c = new Node(a)
 a.next = b;
 b.next = c; 
 var list1 = new SLL();
@@ -125,3 +129,71 @@ list2.isEmpty();
 // list1: (1) --> (2) --> (3) --> null
 
 
+// SOLUTIONS
+
+// class Node {
+//     constructor(val) {
+//         this.val = val
+//         this.next = null
+//     }
+// }
+
+// class SLL {
+//     constructor() {
+//             this.head = null;
+//         }
+
+//     // ------------------------------------- Week 1 Day 3 algo -------------------------------------------
+    
+//     insertAtFront(val){
+//         var newNode = new Node(val);
+//         // construct a node with the val
+//         // make the new node as the front (HINT: What is the front of a Singly Linked List)
+//         if (!this.head){
+//           this.head = newNode;
+//         } else {
+//             newNode.next = this.head;
+//             // var temp = this.head;
+//             this.head = newNode;
+//             // this.head.next = temp; 
+//             // console.log(newNode)
+//         }
+//       }
+//       // head
+//       // (1) --> (2) --> (3) --> null
+
+//       // line16: newNode(100)
+//       //line 22: 
+//       //                  head
+//       // newNode(100) --> (1) --> (2) --> (3) --> null
+
+//       //line 24: 
+//       // head
+//       // newNode(100) --> (1) --> (2) --> (3) --> null
+
+//     removeHead(){
+//         // Remove the head (HINT: What will be the new head?)
+      
+//     }
+
+//     //*** bonus question ***
+//     average(){
+//         // Find the average of all the nodes inside a Singly Linked List
+//         // HINT: How to get an average? What information do we need to generate an average?
+//         // BONUS: What if one of the nodes stored String instead of int? How do you want to handle that edge case?
+
+//         var runner = this.head;
+//         // Loop until runner.next = null
+//         var count = 1;
+//         var total = runner.val;
+//         while (runner.next) {   
+//           // if (typeof())
+//           runner = runner.next;
+//           total += runner.val;
+//           count++;
+//           console.log("Count: " + count);
+//           console.log("Total: " + total);
+//         }
+//         var average = total / count;
+//         return average;
+//     }
